@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <style type="text/css">
+        .leDiv
+        {
+            background-color: #444444;
+            color: #cdcdcd;
+            width: 100px;
+            line-height: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            display: block;
+            position: absolute;
+            transition: all 1s ease-in-out;
+            -webkit-transition: all 1s ease-in-out;
+            left: 0px;
+            top: 60px;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        var topLimit = 36;
+        var store = [];
+
+
+        function setup()
+        {
+            var root = document.getElementById("leRoot");
+            var divy;
+
+            for( var i=0; i < topLimit; i++ )
+            {
+                divy = document.createElement('div');
+                divy.setAttribute("id", "sudDiv" + i );
+                divy.innerHTML = i + 1;
+                divy.className = "leDiv";
+                store[i] = divy;
+                root.appendChild( divy );
+            }
+
+
+        }
+
+        var squareIsDone = false;
+        function doSquare()
+        {
+            var rx, ry, divy;
+
+            if( squareIsDone )
+            {
+                for( var i=0; i < topLimit; i++ )
+                {
+                    divy = store[ i ];
+                    divy.style["left"] = "0px";
+                    divy.style["top"] = "60px";
+                }
+                squareIsDone = false
+            }
+            else
+            {
+
+
+                ry = 0;
+
+                for( var i=0; i < topLimit; i++ )
+                {
+                    rx = ( i % 6 ) * 110;//  i * 100 + i * 10;
+                    if( i % 6 == 0 )
+                    {
+                        ry = ry + 60;
+
+                    }
+                    divy = store[ i ];
+                    divy.setAttribute("style","left:" + (rx) + "px; top:" + (ry) + "px;");
+                }
+                squareIsDone = true;
+            }
+
+
+        }
+
+    </script>
+</head>
+<body onload="setup()">
+
+<p onclick="doSquare()">Tap Me!</p>
+
+<div id="leRoot" style="left: 0px; top:60px;"></div>
+</body>
+</html>

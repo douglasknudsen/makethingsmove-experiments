@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Randomness</title>
+
+    <style type="text/css">
+        .leDiv
+        {
+            background-color: #444444;
+            color: #cdcdcd;
+            width: 100px;
+            line-height: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            display: block;
+            position: absolute;
+            transition: all 1s ease-in-out;
+            -webkit-transition: all 1s ease-in-out;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        var store = [];
+        var topLimit = 100;
+
+        function goForIt()
+        {
+            var root = document.body;
+            var divy, pt;
+
+            //var root = document.getElementById("leMainDiv");
+            //remove all  culd say innerHTML = '' but some cruft about IE < 9 not liking it
+//            while( root.hasChildNodes() ){
+//                root.removeChild(root.lastChild);
+//            }
+
+            for( var i=0; i < topLimit; i++ )
+            {
+                divy = document.createElement('div');
+                divy.setAttribute("id", "sudDiv" + i );
+                divy.innerHTML = i + 1;
+                divy.className = "leDiv";
+                pt = getNewPoint();
+
+                divy.setAttribute("style","left:" + pt.rx + "px; top:" + pt.ry + "px;");
+
+                root.appendChild( divy );
+                store[i] = divy;
+
+            }
+        }
+
+        function shakeEmUp()
+        {
+            for( var i=0; i < topLimit; i++ )
+            {
+                pt = getNewPoint();
+                store[i].style.top = pt.ry + "px";
+                store[i].style.left = pt.rx + "px";
+            }
+
+        }
+
+        function getNewPoint()
+        {
+            return { rx:Math.round( Math.random() * 800 ), ry:Math.round( Math.random() * 600 )};
+        }
+
+
+    </script>
+</head>
+<body onload="goForIt()" onclick="shakeEmUp();" >
+<p>Tap a Card to shuffle!</p>
+
+
+</body>

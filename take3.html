@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <style type="text/css">
+        .leDiv
+        {
+            background-color: #444444;
+            color: #cdcdcd;
+            width: 100px;
+            line-height: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            display: block;
+            position: absolute;
+            transition: all 1s ease-in-out;
+            -webkit-transition: all 1s ease-in-out;
+            left: 0px;
+            top: 60px;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        (function() {
+          var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                                      window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+          window.requestAnimationFrame = requestAnimationFrame;
+        })();
+
+        var topLimit = 36;
+        var store = [];
+        var squareIsDone = false;
+        var ii;
+
+        function setup()
+        {
+            var root = document.getElementById("leRoot");
+            var divy, rx, ry;
+            ry = -60;
+
+            for( var i=0; i < topLimit; i++ )
+            {
+                divy = document.createElement('div');
+                divy.setAttribute("id", "sudDiv" + i );
+                rx = ( i % 6 ) * 110;//  i * 100 + i * 10;
+                if( i % 6 == 0 )
+                {
+                    ry = ry + 60;
+
+                }
+                //calc once at startup
+                divy.setAttribute("rx",rx);
+                divy.setAttribute("ry",ry);
+                divy.innerHTML = i + 1;
+                divy.className = "leDiv";
+                store[i] = divy;
+                root.appendChild( divy );
+            }
+
+        }
+
+        function doSquare()
+        {
+            if( squareIsDone )
+            {
+                ii=0;
+                moveItBack();
+            }
+            else
+            {
+                ii=35;
+                moveItOut();
+            }
+            squareIsDone = !squareIsDone;
+        }
+
+        function moveItOut()
+        {
+            var divy = store[ ii ];
+           // divy.setAttribute("style","left:" + divy.getAttribute("rx") + "px; top:" + divy.getAttribute("ry") + "px;" );
+           var st = "translate(";
+
+            st += divy.getAttribute('rx');
+            st += "px, ";
+            st += divy.getAttribute('ry');
+            st += "px)";
+
+            //console.log( st );
+
+            divy.style.webkitTransform = st;
+
+            ii--;
+            if( ii > -1 )
+            {
+                requestAnimationFrame( moveItOut);
+                //setTimeout( moveItOut, 50 );
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        function moveItBack()
+        {
+            var divy = store[ ii ];
+            //divy.setAttribute("style","left:0px; top:60px;" );
+            divy.style.webkitTransform = "translate(0px,0px)";
+            ii++;
+            if( ii < topLimit )
+            {
+                requestAnimationFrame( moveItBack );
+                //setTimeout( moveItBack, 50 );
+            }
+            else
+            {
+                return;
+            }
+        }
+
+    </script>
+</head>
+<body onload="setup()">
+
+<p onclick="doSquare()">Tap Me!</p>
+
+<div id="leRoot" style="position: absolute;left: 50px; top:10px;"></div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <style type="text/css">
+        .leDiv
+        {
+            background-color: #444444;
+            color: #cdcdcd;
+            width: 100px;
+            line-height: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            display: block;
+            position: absolute;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        var store = [];
+        var topLimit = 100;
+
+        function setUp()
+        {
+            var divy;
+
+            for( var i=0; i < topLimit; i++ )
+            {
+                divy = document.createElement('div');
+                divy.setAttribute("id", "sudDiv" + i );
+                divy.innerHTML = i + 1;
+                divy.className = "leDiv";
+
+                store[i] = divy;
+
+
+            }
+
+        }
+
+        function node()
+        {
+
+        }
+
+    </script>
+
+
+</head>
+<body >
+
+    <div id="leRoot" class="leDiv"></div>
+</body>
+
+
+</html>
